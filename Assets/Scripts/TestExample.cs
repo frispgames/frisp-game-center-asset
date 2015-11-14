@@ -7,4 +7,8 @@ public class TestExample : MonoBehaviour {
 		LeaderboardManager mgr = gameObject.GetComponent<LeaderboardManager>();
 		mgr.ReportScore (100);
 	}
+
+	public void RestartGame() {
+		Application.LoadLevel (0);
+	}
 }

@@ -5,10 +5,6 @@ using UnityEngine.SocialPlatforms.GameCenter;
 
 public class LeaderboardManager : MonoBehaviour {
 
-	void Awake() {
-		DontDestroyOnLoad (gameObject);
-	}
-
 	void Start () {
 		Social.localUser.Authenticate (success => {});
 	}
