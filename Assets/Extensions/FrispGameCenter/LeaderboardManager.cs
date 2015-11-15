@@ -7,12 +7,7 @@ namespace FrispGameCenter
 {
 	public class LeaderboardManager : MonoBehaviour
 	{
-		private readonly ConfigurationManager _configManager;
-
-		void Awake ()
-		{
-			this._configManager = new ConfigurationManager ();
-		}
+		private readonly ConfigurationManager _configManager = new ConfigurationManager ();
 
 		void Start ()
 		{

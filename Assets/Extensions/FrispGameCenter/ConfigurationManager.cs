@@ -9,7 +9,7 @@ namespace FrispGameCenter
 
 		public ConfigurationManager ()
 		{
-			this._config = Resources.Load("FrispGameCenter/Configuration");
+			this._config = Resources.Load<Configuration>("FrispGameCenter/Configuration");
 		}
 
 		public string LeaderboardId()
