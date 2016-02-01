@@ -20,22 +20,6 @@ bool _authenticated;
   return sharedGameKitHelper;
 }
 
-- (void)authenticateLocalPlayer {
-  GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-  
-  [localPlayer setAuthenticateHandler:(^(UIViewController* viewController, NSError *error) {
-    [self setLastError:error];
-    
-    if(viewController != nil) {
-      [self setAuthenticationViewController:viewController];
-    } else if([GKLocalPlayer localPlayer].isAuthenticated) {
-      _authenticated = true;
-    } else {
-      _authenticated = false;
-    }
-  })];
-}
-
 - (void)setAuthenticationViewController:(UIViewController *)authenticationViewController {
   if (authenticationViewController != nil) {
     authenticationViewController = authenticationViewController;
@@ -57,10 +41,6 @@ bool _authenticated;
                                      completion:nil];
 }
 
-- (bool) authenticated {
-  return _authenticated;
-}
-
 - (void)setLastError:(NSError *)error {
 }
 
@@ -70,6 +50,71 @@ bool _authenticated;
    selector:@selector(showAuthenticationViewController)
    name:PresentAuthenticationViewController
    object:nil];
+}
+
+- (bool) authenticated {
+  return _authenticated;
+}
+
+- (void)authenticateLocalPlayer {
+  GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+  
+  [localPlayer setAuthenticateHandler:(^(UIViewController* viewController, NSError *error) {
+    [self setLastError:error];
+    
+    if(viewController != nil) {
+      [self setAuthenticationViewController:viewController];
+    } else if([GKLocalPlayer localPlayer].isAuthenticated) {
+      _authenticated = true;
+    } else {
+      _authenticated = false;
+    }
+  })];
+}
+
+- (void)reportScore:(int64_t)score leaderboardId:(NSString*)leaderboardId {
+  GKScore* scoreReporter = [[GKScore alloc] initWithCategory:leaderboardId];
+  
+  scoreReporter.value = score;
+  
+  [scoreReporter reportScoreWithCompletionHandler:^(NSError *error){
+    if(error != nil) {
+      NSLog(@"Failed to report score");
+    } else {
+      NSLog(@"Succedded to report score");
+    }
+  }];
+}
+
+- (void)reportAchievement:(NSString*)achievementId percentComplete:(double)percentComplete {
+  GKAchievement* achievement = [[GKAchievement alloc] initWithIdentifier:achievementId];
+  
+  achievement.showsCompletionBanner = YES;
+  achievement.percentComplete = percentComplete;
+  
+  [achievement reportAchievementWithCompletionHandler:^(NSError *error){
+    if(error != nil) {
+      NSLog(@"Failed to report score");
+    } else {
+      NSLog(@"Succedded to report score");
+    }
+  }];
+}
+
+- (void)showLeaderboard:(NSString*)leaderboardId {
+  GKLeaderboardViewController* leaderboardController = [[GKLeaderboardViewController alloc] init];
+  if (leaderboardController != NULL)
+  {
+    leaderboardController.category = leaderboardId;
+    leaderboardController.timeScope = GKLeaderboardTimeScopeWeek;
+    leaderboardController.leaderboardDelegate = self;
+    [UnityGetGLViewController() presentViewController:leaderboardController animated:YES completion:nil];
+  }
+}
+
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+  [UnityGetGLViewController() dismissViewControllerAnimated:YES completion:nil];
 }
 
 static FGGameKitHelper *gamekitHelper = nil;
@@ -88,6 +133,23 @@ extern "C" {
   
   bool _Authenticated() {
     return [gamekitHelper authenticated];
+  }
+  
+  void _ReportScore(int64_t score, const char* leaderboardId) {
+    NSString* _leaderboardId = [[NSString alloc] initWithUTF8String:leaderboardId];
+    [gamekitHelper reportScore:score leaderboardId:_leaderboardId];
+  }
+  
+  void _ReportAchievement(const char* achievementId, float percentComplete)
+  {
+    NSString* _achievementId = [[NSString alloc] initWithUTF8String:achievementId];
+    [gamekitHelper reportAchievement:_achievementId percentComplete:(double)percentComplete];
+  }
+  
+  void _ShowLeaderboard(const char* leaderboardId)
+  {
+    NSString* _leaderboardId = [[NSString alloc] initWithUTF8String:leaderboardId];
+    [gamekitHelper showLeaderboard:_leaderboardId];
   }
 }
 

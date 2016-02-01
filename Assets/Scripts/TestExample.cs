@@ -3,12 +3,22 @@ using System.Collections;
 
 public class TestExample : MonoBehaviour
 {
-	public void ReportScore() {
+	private FrispGames.GameCenter.GameCenterManager _gameCenterManager;
 
+	void Awake() {
+		_gameCenterManager = new FrispGames.GameCenter.GameCenterManager ();
+	}
+
+	public void ReportScore () {
+		_gameCenterManager.ReportScore (200);
+	}
+
+	public void ShowLeaderboard () {
+		_gameCenterManager.ShowLeaderboard ();
 	}
 
 	public void RestartGame()
 	{
-
+		Application.LoadLevel (0);
 	}
 }

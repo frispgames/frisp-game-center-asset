@@ -14,6 +14,15 @@ namespace FrispGames.GameCenter.Api {
 		[DllImport ("__Internal")]
 		private static extern bool _Authenticated ();
 
+		[DllImport ("__Internal")]
+		private static extern bool _ReportScore (long score, string leaderboardId);
+
+		[DllImport ("__Internal")]
+		private static extern bool _ReportAchievement (string achievementId, float percentageComplete);
+
+		[DllImport ("__Internal")]
+		private static extern bool _ShowLeaderboard (string leaderboardId);
+		
 		public void Initialize() {
 			_Initialize ();
 		}
@@ -24,6 +33,18 @@ namespace FrispGames.GameCenter.Api {
 
 		public bool Authenticated() {
 			return _Authenticated ();
+		}
+
+		public void ReportScore(long score, string leaderboardId) {
+			_ReportScore (score, leaderboardId);
+		}
+
+		public void ReportAchievement(string achievementId, float percentageComplete) {
+			_ReportAchievement (achievementId, percentageComplete);
+		}
+
+		public void ShowLeaderboard(string leaderboardId) {
+			_ShowLeaderboard (leaderboardId);
 		}
 	}
 }

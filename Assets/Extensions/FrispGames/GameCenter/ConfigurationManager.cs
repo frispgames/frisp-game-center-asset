@@ -2,11 +2,11 @@
 using System.Collections;
 
 namespace FrispGames.GameCenter {
-	public class ConfigurationManager : MonoBehaviour {
+	public class ConfigurationManager {
 		private readonly Configuration _config;
 
 		public ConfigurationManager () {
-			this._config = Resources.Load<Configuration>("FrispGameCenter/Configuration");
+			this._config = Resources.Load<Configuration>("FrispGames/GameCenter/Configuration");
 		}
 
 		public string LeaderboardId(){
