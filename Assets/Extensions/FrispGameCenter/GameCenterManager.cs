@@ -7,10 +7,11 @@ namespace FrispGameCenter
 {
 	public class LeaderboardManager : MonoBehaviour
 	{
-		private readonly ConfigurationManager _configManager = new ConfigurationManager ();
+		private ConfigurationManager _configManager;
 
 		void Start ()
 		{
+			_configManager = new ConfigurationManager ();
 			Social.localUser.Authenticate (success => {});
 		}
 
@@ -21,7 +22,7 @@ namespace FrispGameCenter
 
 		public void ShowLeaderboard()
 		{
-			Social.ShowLeaderboardUI ();
+			Social.Active.ShowLeaderboardUI ();
 		}
 		
 		private string LeaderboardId()
