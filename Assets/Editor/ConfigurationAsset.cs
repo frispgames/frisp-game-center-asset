@@ -9,7 +9,7 @@ public class ConfigurationAsset
 		string assetPathAndName =
 			AssetDatabase.GenerateUniqueAssetPath("Assets/Configuration.asset");
 		
-		var asset = ScriptableObject.CreateInstance<FrispGameCenter.Configuration>();
+		var asset = ScriptableObject.CreateInstance<FrispGames.GameCenter.Configuration>();
 		AssetDatabase.CreateAsset(asset, assetPathAndName);
 		
 		AssetDatabase.SaveAssets();
