@@ -22,6 +22,14 @@ namespace FrispGames.GameCenter.Api {
 
 		[DllImport ("__Internal")]
 		private static extern bool _ShowLeaderboard (string leaderboardId);
+
+		private static readonly AppleGameKit _singleton = new AppleGameKit ();
+		
+		private AppleGameKit() {}
+		
+		public static AppleGameKit Instance() {
+			return _singleton;
+		}
 		
 		public void Initialize() {
 			_Initialize ();

@@ -1,47 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FrispGames.GameCenter.Api;
 
 namespace FrispGames
 {
 	namespace GameCenter {
 		public class GameCenterManager : MonoBehaviour
 		{
-			private ConfigurationManager _configManager;
-			private Api.AppleGameKit _appleGameKit;
 
 			void Awake () {
-				this._configManager = new ConfigurationManager ();
-
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {
-					_appleGameKit = new Api.AppleGameKit ();
-					_appleGameKit.Initialize ();
-					_appleGameKit.Authenticate ();
+					gameKit().Initialize ();
+					gameKit().Authenticate ();
 				}
 			}
 
 			public void ReportScore(long score)
 			{
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {
-					_appleGameKit.ReportScore(score, LeaderboardId());
+					gameKit().ReportScore(score, this.LeaderboardId());
 				}
 			}
 
 			public void ShowLeaderboard()
 			{
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {
-					_appleGameKit.ShowLeaderboard(this.LeaderboardId());
+					gameKit().ShowLeaderboard(this.LeaderboardId());
 				}
 			}
 
 			public void ReportAchievement(string achievementId, float percentageComplete) {
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {
-					_appleGameKit.ReportAchievement(achievementId, percentageComplete);
+					gameKit().ReportAchievement(achievementId, percentageComplete);
 				}
 			}
 			
 			private string LeaderboardId()
 			{
-				return _configManager.LeaderboardId();
+				return ConfigurationManager.Instance().LeaderboardId();
+			}
+
+			private Api.AppleGameKit gameKit() {
+				return Api.AppleGameKit.Instance ();
 			}
 		}
 	}

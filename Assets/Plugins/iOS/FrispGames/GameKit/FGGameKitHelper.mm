@@ -94,9 +94,9 @@ bool _authenticated;
   
   [achievement reportAchievementWithCompletionHandler:^(NSError *error){
     if(error != nil) {
-      NSLog(@"Failed to report score");
+      NSLog(@"Failed to report achievement");
     } else {
-      NSLog(@"Succedded to report score");
+      NSLog(@"Succedded to report achievement");
     }
   }];
 }

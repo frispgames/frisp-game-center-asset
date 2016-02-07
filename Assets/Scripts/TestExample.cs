@@ -13,6 +13,10 @@ public class TestExample : MonoBehaviour
 		_gameCenterManager.ReportScore (200);
 	}
 
+	public void ReportAchievement () {
+		_gameCenterManager.ReportAchievement ("com.frispgames.frispgamecenterasset.achievement_1", 100.0f);
+	}
+
 	public void ShowLeaderboard () {
 		_gameCenterManager.ShowLeaderboard ();
 	}
