@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
  
-@interface FGGameKitHelper : NSObject <GKLeaderboardViewControllerDelegate> {}
+@interface FGGameKitHelper : NSObject <GKGameCenterControllerDelegate> {}
 
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;

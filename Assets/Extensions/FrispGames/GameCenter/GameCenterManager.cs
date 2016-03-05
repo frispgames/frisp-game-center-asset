@@ -7,7 +7,6 @@ namespace FrispGames
 	namespace GameCenter {
 		public class GameCenterManager : MonoBehaviour
 		{
-
 			void Awake () {
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {
 					gameKit().Initialize ();
